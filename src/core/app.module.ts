@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { LoggerModule } from 'nestjs-pino'
 
 import { PrismaModule } from '@/infrastructure/prisma/prisma.module'
+import { AccountsModule } from '@/modules/accounts/accounts.module'
 import { ObservabilityModule } from '@/observability/observability.module'
 
 @Module({
@@ -32,7 +33,8 @@ import { ObservabilityModule } from '@/observability/observability.module'
 			}
 		}),
 		ObservabilityModule,
-		PrismaModule
+		PrismaModule,
+		AccountsModule
 	]
 })
 export class AppModule {}
