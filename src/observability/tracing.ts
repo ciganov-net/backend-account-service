@@ -12,7 +12,7 @@ const traceExporter = new OTLPTraceExporter({
 const sdk = new NodeSDK({
 	traceExporter,
 	resource: resourceFromAttributes({
-		[ATTR_SERVICE_NAME]: 'auth-service'
+		[ATTR_SERVICE_NAME]: 'account-service'
 	}),
 	instrumentations: [
 		getNodeAutoInstrumentations({
