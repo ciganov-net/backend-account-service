@@ -3,6 +3,8 @@ import type {
 	CreateUserResponse,
 	GetMeRequest,
 	GetMeResponse,
+	GetWorstPlayersRequest,
+	GetWorstPlayersResponse,
 	PatchUserRequest,
 	PatchUserResponse
 } from '@ciganov/contracts/dist/gen/user'
@@ -28,5 +30,12 @@ export class AccountsController {
 	@GrpcMethod('UserService', 'CreateUser')
 	public async create(data: CreateUserRequest): Promise<CreateUserResponse> {
 		return await this.accountsService.create(data)
+	}
+
+	@GrpcMethod('UserService', 'GetWorstPlayers')
+	public async getWorstPlayers(
+		data: GetWorstPlayersRequest
+	): Promise<GetWorstPlayersResponse> {
+		return await this.accountsService.getWorstPlayers(data)
 	}
 }

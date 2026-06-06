@@ -3,6 +3,8 @@ import {
 	CreateUserResponse,
 	GetMeRequest,
 	GetMeResponse,
+	GetWorstPlayersRequest,
+	GetWorstPlayersResponse,
 	PatchUserRequest,
 	PatchUserResponse
 } from '@ciganov/contracts/dist/gen/user'
@@ -12,6 +14,7 @@ import { RpcException } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 
 import { AuthClientGrpc } from '@/infrastructure/grpc/clients/auth/auth.grpc'
+import { PrismaService } from '@/infrastructure/prisma/prisma.service'
 
 import { AccountsRepository } from './accounts.repository'
 
@@ -19,8 +22,31 @@ import { AccountsRepository } from './accounts.repository'
 export class AccountsService {
 	constructor(
 		private readonly repo: AccountsRepository,
+		private readonly prismaService: PrismaService,
 		private readonly authClient: AuthClientGrpc
 	) {}
+
+	async getWorstPlayers(
+		data: GetWorstPlayersRequest
+	): Promise<GetWorstPlayersResponse> {
+		const { limit } = data
+		const accounts = await this.prismaService.account.findMany({
+			orderBy: [{ successRate: 'asc' }, { loseAmount: 'desc' }],
+			take: limit
+		})
+
+		return {
+			users: accounts.map(account => ({
+				id: account.id,
+				displayName: account.displayName ?? undefined,
+				avatar: account.avatar ?? undefined,
+				bio: account.bio ?? undefined,
+				successRate: account.successRate,
+				email: '',
+				loseAmount: account.loseAmount
+			}))
+		}
+	}
 
 	async getMe(data: GetMeRequest): Promise<GetMeResponse> {
 		const { id } = data
