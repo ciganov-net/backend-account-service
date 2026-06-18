@@ -31,6 +31,10 @@ export class AccountsService {
 	): Promise<GetWorstPlayersResponse> {
 		const { limit } = data
 		const accounts = await this.prismaService.account.findMany({
+			where: {
+				successRate: { not: 0 },
+				loseAmount: { not: 0 }
+			},
 			orderBy: [{ successRate: 'asc' }, { loseAmount: 'desc' }],
 			take: limit
 		})

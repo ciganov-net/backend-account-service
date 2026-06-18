@@ -259,7 +259,6 @@ export type AccountOrderByWithRelationInput = {
 
 export type AccountWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  avatar?: string
   AND?: Prisma.AccountWhereInput | Prisma.AccountWhereInput[]
   OR?: Prisma.AccountWhereInput[]
   NOT?: Prisma.AccountWhereInput | Prisma.AccountWhereInput[]
@@ -267,9 +266,10 @@ export type AccountWhereUniqueInput = Prisma.AtLeast<{
   bio?: Prisma.StringNullableFilter<"Account"> | string | null
   successRate?: Prisma.IntFilter<"Account"> | number
   loseAmount?: Prisma.IntFilter<"Account"> | number
+  avatar?: Prisma.StringNullableFilter<"Account"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Account"> | Date | string
-}, "id" | "avatar">
+}, "id">
 
 export type AccountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
