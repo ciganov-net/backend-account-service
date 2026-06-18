@@ -98,7 +98,8 @@ export class AccountsService {
 			displayName: user.displayName,
 			bio: user.bio,
 			successRate: user.successRate,
-			loseAmount: user.loseAmount
+			loseAmount: user.loseAmount,
+			avatar: user.avatar,
 		}
 
 		await this.repo.update(user.id, updateData)
